@@ -1,20 +1,31 @@
 import javax.swing.*;
+import java.awt.*;
 
-public class Window {
-    private PlayField playfield;
+class Window extends JFrame{
 
-    public Window(PlayField playField){
-        this.playfield = playField;
-        createFrame();
+    private GameControl gameControl = new GameControl();
+
+    Window(){
+        createPanel();
+        fensterEinmitten(500, 600);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
+        setVisible(true);
     }
-    private void createFrame(){
-        JFrame frame = new JFrame();
-        frame.setTitle("Gibbin' Vaders");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500,600);
-        frame.setResizable(false);
-        frame.add(playfield);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+
+    private void createPanel(){
+        JPanel panel = new PlayField(gameControl);
+        setContentPane(panel);
+
+    }
+
+    private void fensterEinmitten(int breite, int hoehe) {
+        Dimension bildschirmGroesse = Toolkit.getDefaultToolkit().getScreenSize();
+        Rectangle fensterAusschnitt = new Rectangle();
+        fensterAusschnitt.width = breite;
+        fensterAusschnitt.height = hoehe;
+        fensterAusschnitt.x = (bildschirmGroesse.width - fensterAusschnitt.width) / 2;
+        fensterAusschnitt.y = (bildschirmGroesse.height - fensterAusschnitt.height) / 2;
+        setBounds(fensterAusschnitt);
     }
 }

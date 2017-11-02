@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,12 +14,23 @@ public class ObjectController {
 	}
 	public void tick(){
 		if(PlayerBulletList.size() > 0){
-			int i = 0;
+			Iterator<PlayerBullet> iter = PlayerBulletList.iterator();
+
+			while (iter.hasNext()) {
+			    PlayerBullet b = iter.next();
+
+			    if (b.y < 0.0D || b.y > 480.0D){
+			        iter.remove();
+			    }
+			    b.tick();
+			}
+			
+			/*int i = 0;
 			for(PlayerBullet bullet : PlayerBulletList){
 				bullet = PlayerBulletList.get(i);
 				bullet.tick();
 				i++;
-			}
+			}*/
 		}
 	}
 	public void render(Graphics g){

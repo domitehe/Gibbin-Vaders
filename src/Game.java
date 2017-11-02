@@ -121,8 +121,8 @@ public class Game extends Canvas implements Runnable {
 	private void tick(){
 		key.tick();
 		if(State== STATE.GAME){
-			//c.tick();
-//			p.tick();
+			c.tick();
+			p.tick();
 		}
 		if(key.enter && State== STATE.MENU){
 			State = STATE.GAME;
@@ -151,6 +151,8 @@ public class Game extends Canvas implements Runnable {
 		}
 		if  (State == STATE.GAME){
 			p.render(g);
+			c.render(g);
+			
 		}
 		g.dispose();
 		bs.show();

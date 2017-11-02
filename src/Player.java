@@ -16,6 +16,10 @@ public class Player extends Object{
 		this.input = input;
 	}
 	public void render(Graphics g){
+		tick();
+		g.drawRect((int)this.x, (int)this.y, 10,10);
+	}
+	public void tick(){
 		if(input.left){
 			this.x-=0.3;
 		}
@@ -27,8 +31,9 @@ public class Player extends Object{
 		}
 		if(input.up){
 			this.y-=0.3;
+		}if(input.shoot){
+			this.c.addPlayerBullet(new PlayerBullet(this.x, this.y, this.c, this.game));
 		}
-		g.drawRect((int)this.x, (int)this.y, 10,10);
 	}
 	
 }

@@ -114,6 +114,8 @@ public class Game extends Canvas implements Runnable {
 		//this.addMouseListener(new MouseInput()); //call the MouseInput class
 		c = new ObjectController(this);
 		p = new Player(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 5, c, key, this);
+		//p = new Player(10, 10, c, key, this);
+
 		menu = new Menu();
 	}
 	private void tick(){
@@ -147,8 +149,11 @@ public class Game extends Canvas implements Runnable {
 		if (State == STATE.MENU) {
 				menu.render(g);
 		}
+		if  (State == STATE.GAME){
+			p.render(g);
+		}
 		g.dispose();
-
+		bs.show();
 
 		
 	}

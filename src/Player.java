@@ -21,18 +21,19 @@ public class Player extends Object{
 		g.drawRect((int)this.x, (int)this.y, 10,10);
 	}
 	public void tick(){
-		if(input.left){
+		if(input.left&&this.x>0){
 			this.x-=0.3;
 		}
-		if(input.right){
+		if(input.right&&this.x<game.WIDTH*game.SCALE){
 			this.x+=0.3;
 		}
-		if(input.down){
+		if(input.down&&this.y<game.HEIGHT*game.SCALE){
 			this.y+=0.3;
 		}
-		if(input.up){
+		if(input.up&&this.y>0){
 			this.y-=0.3;
-		}if(input.shoot){
+		}
+		if(input.shoot){
 			if(i >= fireRate){
 				this.c.addPlayerBullet(new PlayerBullet(this.x, this.y, this.c, this.game));
 				i = 0;

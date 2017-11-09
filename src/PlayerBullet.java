@@ -6,22 +6,21 @@ public class PlayerBullet extends Bullet {
 
     public PlayerBullet(double x, double y, ObjectController c, Game game) {
         super(x, y, c, game);
-        this.speed = 4;
+        this.speed = 0.3;
     }
 
     public void tick() {
         this.y -= speed;
-        /*if (this.y < 0.0D || this.y > 480.0D) {
-            this.c.removePlayerBullet(this);
-        }*/
+
 
     }
 
     public void render(Graphics g) {
+    	tick();
         g.drawRect((int)this.x+3, (int)this.y-4,4, 4);
     }
 
     public Rectangle getBounds() {
-        return new Rectangle((int)this.x + 10, (int)this.y + 12, 10, 8);
+        return new Rectangle((int)this.x+3, (int)this.y-4,4, 4);
     }
 }

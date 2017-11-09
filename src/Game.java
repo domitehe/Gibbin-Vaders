@@ -1,4 +1,5 @@
 import java.awt.Canvas;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -7,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 @SuppressWarnings("serial")
 public class Game extends Canvas implements Runnable {
@@ -24,7 +26,8 @@ public class Game extends Canvas implements Runnable {
 	
 	private Keyboard key;
 	private ObjectController c;
-	private Player p;
+	Player p;
+	private Enemy e;
 	
 	private Thread thread;
 	
@@ -32,10 +35,13 @@ public class Game extends Canvas implements Runnable {
 	public static final int WIDTH = 320;
 	public static final int HEIGHT = WIDTH / 12 * 9;
 	
+	public LinkedList<Enemy> EnemyList;
+	public LinkedList<PlayerBullet> PlayerBulletList;
+	
 	private boolean running = false;
 	private Menu menu;
 	
-	private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
+	private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_ARGB);
 	
 	public static void main(String[] args) {
 		Game game = new Game();
@@ -114,8 +120,12 @@ public class Game extends Canvas implements Runnable {
 		//this.addMouseListener(new MouseInput()); //call the MouseInput class
 		c = new ObjectController(this);
 		p = new Player(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 5, c, key, this);
-		//p = new Player(10, 10, c, key, this);
-
+		//Enemy e = new Enemy(WIDTH * SCALE, 50, c, this);
+		c.createEnemy(2);
+		
+		PlayerBulletList = c.getPlayerBulletList();
+		EnemyList = c.getEnemyList();
+		
 		menu = new Menu();
 	}
 	private void tick(){
@@ -132,18 +142,18 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 	private void render(){
-		int i = 0;
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs  == null){
-			createBufferStrategy(1);  //how many images loading up, cost CPU usage
+			createBufferStrategy(3);  //how many images loading up, cost CPU usage
 			return;
 		} //creating buffer strategy
 		
 		Graphics g = bs.getDrawGraphics(); //apply buffer strategy to graphics
-		/////////////////////////////
 		
 		
-		g.drawImage(image, 0, 0, getWidth(), getHeight(), this); //black background
+		//g.drawImage(image, 0, 0, getWidth(), getHeight(), this); //black background
+         g.fillRect(0, 0, getWidth(), getHeight());
+         g.setColor(Color.WHITE);
 
 			
 		if (State == STATE.MENU) {
@@ -152,7 +162,6 @@ public class Game extends Canvas implements Runnable {
 		if  (State == STATE.GAME){
 			p.render(g);
 			c.render(g);
-			
 		}
 		g.dispose();
 		bs.show();

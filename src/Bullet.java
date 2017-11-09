@@ -3,7 +3,7 @@ import java.awt.Graphics;
 public abstract class Bullet extends Object {
     protected ObjectController c;
     protected Game game;
-    protected int speed;
+    protected double speed;
 
     public Bullet(double x, double y, ObjectController c, Game game) {
         super(x, y);

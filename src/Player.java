@@ -4,11 +4,12 @@ public class Player extends Object{
 
 	   private final int SPEED = 5;
 	    private int cspeed = 5;
-	    private int fireRate = 80;
+	    private int fireRate = 800;
 	    private Game game;
 	    private ObjectController c;
 	    private Keyboard input;
 	    private int i = 0;
+	    private double playerspeed = 0.15;
 	
 	public Player(double x, double y, ObjectController c, Keyboard input, Game game) {
 		super(x, y);
@@ -18,20 +19,20 @@ public class Player extends Object{
 	}
 	public void render(Graphics g){
 		tick();
-		g.drawRect((int)this.x, (int)this.y, 10,10);
+		g.drawRect((int)this.x, (int)this.y, 20,20);
 	}
 	public void tick(){
 		if(input.left&&this.x>0){
-			this.x-=0.3;
+			this.x-=playerspeed;
 		}
 		if(input.right&&this.x<game.WIDTH*game.SCALE){
-			this.x+=0.3;
+			this.x+=playerspeed;
 		}
 		if(input.down&&this.y<game.HEIGHT*game.SCALE){
-			this.y+=0.3;
+			this.y+=playerspeed;
 		}
 		if(input.up&&this.y>0){
-			this.y-=0.3;
+			this.y-=playerspeed;
 		}
 		if(input.shoot){
 			if(i >= fireRate){

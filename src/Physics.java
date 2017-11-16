@@ -1,11 +1,12 @@
 
 public class Physics {
 	
-    public static boolean Collision(Enemy enemy, PlayerBullet bullet) {
-        return enemy.getBounds().intersects(bullet.getBounds());
+    public static boolean Collision(EntityEnemy tempee, EntityPlayer tempep) {
+        return tempee.getBounds().intersects(tempep.getBounds());
+    }
+    
+    public static boolean Collision(EntityPlayer tempep, EntityEnemy tempee){
+		return tempep.getBounds().intersects(tempee.getBounds());
     }
 
-    /*public static boolean Collision(EntityB entb, EntityA enta) {
-        return entb.getBounds().intersects(enta.getBounds());
-    }*/
 }

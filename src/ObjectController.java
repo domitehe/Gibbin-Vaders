@@ -1,92 +1,74 @@
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 public class ObjectController {
-	private List EnemyBulletList;
-	private LinkedList<Enemy> EnemyList = new LinkedList<Enemy>();
-	private LinkedList<PlayerBullet> PlayerBulletList = new LinkedList <PlayerBullet>();
+//	private List EnemyBulletList;
+	private LinkedList<EntityPlayer> epl = new LinkedList <EntityPlayer>();
+	private LinkedList<EntityEnemy> eel = new LinkedList <EntityEnemy>();
 	private Game game;
 	private Random r = new Random();
+	
+	private EntityEnemy tempee;
+	private EntityPlayer tempep;
 	
 	public ObjectController(Game game){
 		this.game = game;
 	}
 	public void tick(){
-		if(PlayerBulletList.size() > 0){
-			Iterator<PlayerBullet> iter = PlayerBulletList.iterator();
-
-			while (iter.hasNext()) {
-			    PlayerBullet b = iter.next();
-
-			    if (b.y < 0.0D || b.y > 480.0D){
-			        iter.remove();
-			    }
-			    b.tick();
-			}
-		}
-		if(EnemyList.size() > 0){
-			Iterator<Enemy> iter = EnemyList.iterator();
+		for (int i = 0; i < epl.size(); i++){
+			tempep = epl.get(i);
 			
-			while (iter.hasNext()){
-				Enemy e = iter.next();
-				
-				if(e.x < 0.0D || e.x > game.getWidth()){
-					//iter.remove();
-					e.speed = e.speed*(-1);
-				}
-				e.tick();
-				
-			}
+			tempep.tick();
 		}
-		System.out.println(EnemyList.size());
+		for (int i = 0; i < eel.size(); i++){
+			tempee = eel.get(i);
+
+			tempee.tick();
+		}
+		//System.out.println(eel.size());
+		//System.out.println(epl.size());
 	}
 	public void render(Graphics g){
-		for(PlayerBullet bullet : PlayerBulletList){
-			bullet.render(g);
+		for(EntityPlayer ea : epl){
+			ea.render(g);
 		}
-		for(Enemy enemy : EnemyList){
-			enemy.render(g);
-		}
-		/*if(EnemyList.size() > 0){
-			Iterator<Enemy> iter = EnemyList.iterator();
+
+		for (int i = 0; i < eel.size(); i++){
+			tempee = eel.get(i);
 			
-			while (iter.hasNext()){
-				iter.next().render(g);
-			}
-		}*/
+			tempee.render(g);
+		}
 	}
 	
 	public void createEnemy(int enemy_count){
 		for (int i = 0; i < enemy_count; i++) {
 			Enemy e = new Enemy(Game.WIDTH * Game.SCALE * r.nextDouble(), 50, this, game);
-		//Enemy e = new Enemy(Game.WIDTH * Game.SCALE, 50, this, game);
-		addEnemy(e);
+			addEntityEnemy(e);
 		}
 	}
-	public void addEnemy(Enemy enemy){
-		this.EnemyList.add(enemy);
+	public void addEntityEnemy(EntityEnemy entenemy){
+		this.eel.add(entenemy);
 	}
-	public void removeEnemy(Enemy enemy){
-			this.EnemyList.remove(enemy);
+	public void removeEntityEnemy(EntityEnemy entenemy){
+		this.eel.remove(entenemy);
 	}
-	public void addPlayerBullet(PlayerBullet bullet){
-		this.PlayerBulletList.add(bullet);
+	public void addEntityPlayer(EntityPlayer entplayer){
+		this.epl.add(entplayer);
 	}
-	public void removePlayerBullet(PlayerBullet bullet){
-		this.PlayerBulletList.remove(bullet);
+	public void removeEntityPlayer(EntityPlayer entplayer){
+		this.epl.remove(entplayer);
 	}
-	public LinkedList<PlayerBullet> getPlayerBulletList() {
+	public LinkedList<EntityPlayer> getPlayerBulletList() {
 		// TODO Auto-generated method stub
-		return PlayerBulletList;
+		return epl;
 	}
-	public LinkedList<Enemy> getEnemyList() {
+	public LinkedList<EntityEnemy> getEnemyList() {
 		// TODO Auto-generated method stub
-		return EnemyList;
+		return eel;
+	}
+	public void reset(){
+		// reset list
 	}
 	
 }

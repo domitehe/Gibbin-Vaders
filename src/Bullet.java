@@ -5,10 +5,11 @@ public abstract class Bullet extends Object {
     protected Game game;
     protected double speed;
 
-    public Bullet(double x, double y, ObjectController c, Game game) {
+    public Bullet(double x, double y, ObjectController c, Game game, double speed) {
         super(x, y);
         this.c = c;
         this.game = game;
+        this.speed = speed;
     }
 
     public void tick() {

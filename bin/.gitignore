@@ -1,2 +1,7 @@
 /Enemy.class
 /Physics.class
+/EntityEnemy.class
+/EntityPlayer.class
+/EnemyBullet.class
+/Fail.class
+/Pause.class

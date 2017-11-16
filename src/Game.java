@@ -18,7 +18,9 @@ public class Game extends Canvas implements Runnable {
 	public enum STATE{
 		MENU,
 		GAME,
-		FAIL
+		FAIL,
+		PAUSE,
+		BOSS
 	}
 	public static STATE State = STATE.MENU;
 	
@@ -35,11 +37,13 @@ public class Game extends Canvas implements Runnable {
 	public static final int WIDTH = 320;
 	public static final int HEIGHT = WIDTH / 12 * 9;
 	
-	public LinkedList<Enemy> EnemyList;
-	public LinkedList<PlayerBullet> PlayerBulletList;
+    public LinkedList<EntityPlayer> epl;
+    public LinkedList<EntityEnemy> eel;
 	
 	private boolean running = false;
 	private Menu menu;
+	private Fail fail;
+	private Pause pause;
 	
 	private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_ARGB);
 	
@@ -121,12 +125,14 @@ public class Game extends Canvas implements Runnable {
 		c = new ObjectController(this);
 		p = new Player(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 5, c, key, this);
 		//Enemy e = new Enemy(WIDTH * SCALE, 50, c, this);
-		c.createEnemy(2);
+		c.createEnemy(4);
 		
-		PlayerBulletList = c.getPlayerBulletList();
-		EnemyList = c.getEnemyList();
+		epl = c.getPlayerBulletList();
+		eel = c.getEnemyList();
 		
 		menu = new Menu();
+		fail = new Fail();
+		pause = new Pause();
 	}
 	private void tick(){
 		key.tick();
@@ -134,10 +140,13 @@ public class Game extends Canvas implements Runnable {
 			c.tick();
 			p.tick();
 		}
-		if(key.enter && State== STATE.MENU){
+		if((key.enter && State== STATE.MENU) | (key.enter && State == STATE.PAUSE)){
 			State = STATE.GAME;
 		}
-		if(key.esc){
+		if(key.esc && State == STATE.GAME){
+			State = STATE.PAUSE;
+		}
+		if(key.esc && State == STATE.FAIL){
 			State = STATE.MENU;
 		}
 	}
@@ -162,6 +171,12 @@ public class Game extends Canvas implements Runnable {
 		if  (State == STATE.GAME){
 			p.render(g);
 			c.render(g);
+		}
+		if (State == STATE.FAIL){
+			fail.render(g);
+		}
+		if(State == STATE.PAUSE){
+			pause.render(g);
 		}
 		g.dispose();
 		bs.show();

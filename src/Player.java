@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -19,7 +20,9 @@ public class Player extends Object implements EntityPlayer{
 	}
 	public void render(Graphics g){
 		tick();
+		g.setColor(Color.RED);
 		g.drawRect((int)this.x, (int)this.y, playersize,playersize);
+		
 	}
 	public void tick(){
 		for (int i = 0; i < game.eel.size(); i++) {

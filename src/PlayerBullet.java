@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -16,7 +17,7 @@ public class PlayerBullet extends Bullet implements EntityPlayer{
     public void render(Graphics g) {
     	tick();
         g.drawRect((int)this.x-bulletsize/2, (int)this.y-bulletsize/2,bulletsize, bulletsize);
-        
+        g.setColor(Color.RED);
         if(this.y < 0){
         	c.removeEntityPlayer(this);
         }

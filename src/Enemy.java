@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -18,6 +19,7 @@ public class Enemy extends Object implements EntityEnemy{
 	public void render(Graphics g){
 		tick();
 		g.drawRect((int)this.x, (int)this.y, size, size);
+		g.setColor(Color.RED);
 	}
 	public void tick(){
 		x-=movementspeed; //Movement

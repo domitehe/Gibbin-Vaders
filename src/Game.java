@@ -1,13 +1,18 @@
 import java.awt.Canvas;
 import java.awt.Color;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.LinkedList;
 
 @SuppressWarnings("serial")
@@ -48,8 +53,9 @@ public class Game extends Canvas implements Runnable {
 	private Pause pause;
 	private Win win;
 	private Boss boss;
-	
-	private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_ARGB);
+	private BufferedImage menuImage;
+	private BufferedImage stageImage;
+
 	
 	public static void main(String[] args) {
 		Game game = new Game();
@@ -64,6 +70,7 @@ public class Game extends Canvas implements Runnable {
 		game.frame.setResizable(false);
 		game.frame.setLocationRelativeTo(null); //not to set the location
 		game.frame.setVisible(true);
+
 		game.start();
 
 	}
@@ -123,6 +130,13 @@ public class Game extends Canvas implements Runnable {
 	
 	private void init(){
 		requestFocus();
+		 BufferedImageLoader loader = new BufferedImageLoader();
+	        try {
+	            this.stageImage= loader.loadImage("/images/stage.png");
+	            this.menuImage= loader.loadImage("/images/menu.png");
+	        } catch (IOException var3) {
+	            var3.printStackTrace();
+	        }
 		key = new Keyboard();
 		this.addKeyListener(key); //call the KeyInput class
 		//this.addMouseListener(new MouseInput()); //call the MouseInput class
@@ -131,6 +145,7 @@ public class Game extends Canvas implements Runnable {
 		pause = new Pause();
 		win = new Win();
 		boss = new Boss();
+		
 	}
 	
 	private void gameinit(){
@@ -175,17 +190,15 @@ public class Game extends Canvas implements Runnable {
 		} //creating buffer strategy
 		
 		Graphics g = bs.getDrawGraphics(); //apply buffer strategy to graphics
-		
-		
-		//g.drawImage(image, 0, 0, getWidth(), getHeight(), this); //black background
-         g.fillRect(0, 0, getWidth(), getHeight());
-         g.setColor(Color.WHITE);
+		g.drawImage(this.menuImage, 0, 0, this.getWidth(), this.getHeight(), this);
 
 			
 		if (State == STATE.MENU) {
+				
 				menu.render(g);
 		}
 		if  (State == STATE.GAME){
+			g.drawImage(this.stageImage, 0, 0, this.getWidth(), this.getHeight(), null);
 			p.render(g);
 			c.render(g);
 		}

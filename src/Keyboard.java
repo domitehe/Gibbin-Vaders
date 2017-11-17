@@ -6,17 +6,17 @@ public class Keyboard implements KeyListener {
 	private boolean[] keys = new boolean[120];
 	
 	@SuppressWarnings("unused")
-	public boolean up, down, left, right, slow ,shoot, esc, enter;
+	public boolean up, down, left, right, shoot, esc, enter, numOne;
 	
 	public void tick() {
 		up = keys[KeyEvent.VK_UP];
 		down = keys[KeyEvent.VK_DOWN];
 		left = keys[KeyEvent.VK_LEFT];
 		right = keys[KeyEvent.VK_RIGHT];
-		slow = keys[KeyEvent.VK_SHIFT];
 		shoot = keys[KeyEvent.VK_Z] || keys[KeyEvent.VK_X];
 		esc = keys[KeyEvent.VK_ESCAPE];
 		enter = keys[KeyEvent.VK_ENTER];
+		numOne = keys[KeyEvent.VK_1];
 	}
 	
 	@Override

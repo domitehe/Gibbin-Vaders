@@ -68,7 +68,12 @@ public class ObjectController {
 		return eel;
 	}
 	public void reset(){
-		// reset list
+		while (!eel.isEmpty()) {
+	        eel.removeFirst();
+	    }
+		while (!epl.isEmpty()) {
+	        epl.removeFirst();
+	    }
 	}
 	
 }

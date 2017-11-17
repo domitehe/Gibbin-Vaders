@@ -13,13 +13,14 @@ import java.util.LinkedList;
 @SuppressWarnings("serial")
 public class Game extends Canvas implements Runnable {
 	
-	public final String TITLE = "Gibbin 'Vaders";
+	public final String TITLE = "Gibbin' Vaders";
 	
 	public enum STATE{
 		MENU,
 		GAME,
 		FAIL,
 		PAUSE,
+		WIN,
 		BOSS
 	}
 	public static STATE State = STATE.MENU;
@@ -30,6 +31,7 @@ public class Game extends Canvas implements Runnable {
 	private ObjectController c;
 	Player p;
 	private Enemy e;
+	private Wave w;
 	
 	private Thread thread;
 	
@@ -44,6 +46,8 @@ public class Game extends Canvas implements Runnable {
 	private Menu menu;
 	private Fail fail;
 	private Pause pause;
+	private Win win;
+	private Boss boss;
 	
 	private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_ARGB);
 	
@@ -122,26 +126,39 @@ public class Game extends Canvas implements Runnable {
 		key = new Keyboard();
 		this.addKeyListener(key); //call the KeyInput class
 		//this.addMouseListener(new MouseInput()); //call the MouseInput class
-		c = new ObjectController(this);
-		p = new Player(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 5, c, key, this);
-		//Enemy e = new Enemy(WIDTH * SCALE, 50, c, this);
-		c.createEnemy(4);
-		
-		epl = c.getPlayerBulletList();
-		eel = c.getEnemyList();
-		
 		menu = new Menu();
 		fail = new Fail();
 		pause = new Pause();
+		win = new Win();
+		boss = new Boss();
 	}
+	
+	private void gameinit(){
+		c = new ObjectController(this);
+		p = new Player(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 5, c, key, this);
+		w = new Wave(c, this, boss);
+		//Enemy e = new Enemy(WIDTH * SCALE, 50, c, this);
+		c.createEnemy(25);
+		
+		epl = c.getPlayerBulletList();
+		eel = c.getEnemyList();
+	}
+	
 	private void tick(){
 		key.tick();
 		if(State== STATE.GAME){
 			c.tick();
 			p.tick();
 		}
-		if((key.enter && State== STATE.MENU) | (key.enter && State == STATE.PAUSE)){
+		if(key.enter && State== STATE.MENU){
 			State = STATE.GAME;
+			gameinit();
+		}
+		if(key.enter && State == STATE.PAUSE){
+			State = STATE.GAME;
+		}
+		if(key.numOne && State == STATE.PAUSE){
+			State = STATE.MENU;
 		}
 		if(key.esc && State == STATE.GAME){
 			State = STATE.PAUSE;
@@ -174,6 +191,7 @@ public class Game extends Canvas implements Runnable {
 		}
 		if (State == STATE.FAIL){
 			fail.render(g);
+			c.reset();
 		}
 		if(State == STATE.PAUSE){
 			pause.render(g);

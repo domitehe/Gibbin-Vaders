@@ -1,10 +1,12 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Random;
 
 public class Enemy extends Object implements EntityEnemy{
-	
-	private double movementspeed = 0.04;
+	Random r = new Random();
+	private double movementspeedx;
+	private double movementspeedy;
 	protected ObjectController c;
 	protected Game game;
 	private int fireRate = 1000;
@@ -15,6 +17,8 @@ public class Enemy extends Object implements EntityEnemy{
 		super(x, y);
 		this.c = c;
 		this.game = game;
+		movementspeedx = (r.nextDouble() * 0.2)-0.1;
+		movementspeedy = (r.nextDouble() * 0.2)-0.1 ;
 	}
 	public void render(Graphics g){
 		tick();
@@ -22,8 +26,8 @@ public class Enemy extends Object implements EntityEnemy{
 		g.setColor(Color.RED);
 	}
 	public void tick(){
-		x-=movementspeed; //Movement
-		
+		x-=movementspeedx; //Movement
+		y+=movementspeedy;
 		for (int i = 0; i < game.epl.size(); i++) {
 			EntityPlayer tempep = game.epl.get(i);
 			if(Physics.Collision(this, tempep)){
@@ -33,11 +37,17 @@ public class Enemy extends Object implements EntityEnemy{
 		}
 		
 		if(x < 0.0D || x+size > game.getWidth()){ //Change Movement when hits the border
-			movementspeed = movementspeed*(-1);
+			movementspeedx = movementspeedx*(-1);
+		}
+		if(y+size > game.getHeight()|| y<0.0D){
+			movementspeedy = movementspeedy*(-1);
 		}
 		
 		if(i >= fireRate){
-			this.c.addEntityEnemy(new EnemyBullet(this.x+size/2, this.y+size, this.c, this.game, 0.2));
+            double dx = this.x - this.game.p.getX();
+            double dy = this.y - this.game.p.getY();
+            double dir = Math.atan2(dy, dx);
+			this.c.addEntityEnemy(new EnemyBullet(this.x+size/2, this.y+size, this.c, this.game,0.2, dir));
 			i = 0;
 		}
 		i++;

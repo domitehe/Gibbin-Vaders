@@ -55,18 +55,15 @@ public class Player extends Object implements EntityPlayer{
 	}
 	@Override
 	public Rectangle getBounds() {
-		// TODO Auto-generated method stub
 		return new Rectangle((int)this.x, (int)this.y, playersize, playersize);
 	}
 	@Override
 	public double getX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return x;
 	}
 	@Override
 	public double getY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return y;
 	}
 	
 }

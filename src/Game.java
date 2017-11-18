@@ -52,7 +52,7 @@ public class Game extends Canvas implements Runnable {
 	private Fail fail;
 	private Pause pause;
 	private Win win;
-	private Boss boss;
+	protected Boss boss;
 	private BufferedImage menuImage;
 	private BufferedImage stageImage;
 
@@ -144,17 +144,17 @@ public class Game extends Canvas implements Runnable {
 		fail = new Fail();
 		pause = new Pause();
 		win = new Win();
-		boss = new Boss();
 		
 	}
 	
 	private void gameinit(){
 		c = new ObjectController(this);
 		p = new Player(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 5, c, key, this);
-		w = new Wave(c, this, boss);
+		w = new Wave(c, this);
+		boss = new Boss(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 2, c, this);
 		//Enemy e = new Enemy(WIDTH * SCALE, 50, c, this);
 		//c.createEnemy(25);
-		
+		c.setWave(w);
 		epl = c.getPlayerBulletList();
 		eel = c.getEnemyList();
 	}
@@ -162,8 +162,13 @@ public class Game extends Canvas implements Runnable {
 	private void tick(){
 		key.tick();
 		if(State== STATE.GAME){
-			c.tick();
-			p.tick();
+//			c.tick();
+//			p.tick();
+		}
+		if(State == STATE.BOSS) {
+//			c.tick();
+//			p.tick();
+//			boss.tick();
 		}
 		if(key.enter && State== STATE.MENU){
 			State = STATE.GAME;
@@ -175,11 +180,14 @@ public class Game extends Canvas implements Runnable {
 		if(key.numOne && State == STATE.PAUSE){
 			State = STATE.MENU;
 		}
-		if(key.esc && State == STATE.GAME){
+		if((key.esc && State == STATE.GAME) | (key.esc && State == STATE.BOSS)){
 			State = STATE.PAUSE;
 		}
-		if(key.esc && State == STATE.FAIL){
+		if((key.esc && State == STATE.FAIL) | (key.esc && State == STATE.WIN)){
 			State = STATE.MENU;
+		}
+		if(key.g && State == STATE.GAME) {
+			p.god = true; // set godmode
 		}
 	}
 	private void render(){
@@ -208,6 +216,14 @@ public class Game extends Canvas implements Runnable {
 		}
 		if(State == STATE.PAUSE){
 			pause.render(g);
+		}
+		if(State == STATE.BOSS) {
+			boss.render(g);
+			p.render(g);
+			c.render(g);
+		}
+		if(State == STATE.WIN) {
+			win.render(g);
 		}
 		g.dispose();
 		bs.show();

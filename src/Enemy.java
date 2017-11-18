@@ -9,7 +9,7 @@ public class Enemy extends Object implements EntityEnemy{
 	private double movementspeedy;
 	protected ObjectController c;
 	protected Game game;
-	private int fireRate = 1000;
+	private int fireRate = 4000;
 	private int i = 0;
 	final private int size = 16;
 	
@@ -17,8 +17,8 @@ public class Enemy extends Object implements EntityEnemy{
 		super(x, y);
 		this.c = c;
 		this.game = game;
-		movementspeedx = (r.nextDouble() * 0.2)-0.1;
-		movementspeedy = (r.nextDouble() * 0.2)-0.1 ;
+		movementspeedx = (r.nextDouble() * 0.2)-0.01;
+		movementspeedy = (r.nextDouble() * 0.2)-0.01 ;
 	}
 	public void render(Graphics g){
 		tick();
@@ -39,7 +39,7 @@ public class Enemy extends Object implements EntityEnemy{
 		if(x < 0.0D || x+size > game.getWidth()){ //Change Movement when hits the border
 			movementspeedx = movementspeedx*(-1);
 		}
-		if(y+size > game.getHeight()|| y<0.0D){
+		if(y+size > (game.getHeight()-(game.getHeight()/5))|| y<0.0D){
 			movementspeedy = movementspeedy*(-1);
 		}
 		
@@ -47,7 +47,7 @@ public class Enemy extends Object implements EntityEnemy{
             double dx = this.x - this.game.p.getX();
             double dy = this.y - this.game.p.getY();
             double dir = Math.atan2(dy, dx);
-			this.c.addEntityEnemy(new EnemyBullet(this.x+size/2, this.y+size, this.c, this.game,0.2, dir));
+			this.c.addEntityEnemy(new EnemyBullet(this.x+size/2, this.y+size, this.c, this.game,0.05, dir));
 			i = 0;
 		}
 		i++;

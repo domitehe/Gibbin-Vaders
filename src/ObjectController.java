@@ -8,6 +8,7 @@ public class ObjectController {
 	private LinkedList<EntityEnemy> eel = new LinkedList <EntityEnemy>();
 	private Game game;
 	private Random r = new Random();
+	private Wave wave;
 	
 	private EntityEnemy tempee;
 	private EntityPlayer tempep;
@@ -52,8 +53,9 @@ public class ObjectController {
 	}
 	public void removeEntityEnemy(EntityEnemy entenemy){
 		this.eel.remove(entenemy);
-		if(eel.size() == 0) {
+		if((eel.size() == 0) & wave.finished) {
 			Game.State = Game.STATE.BOSS;
+			this.addEntityEnemy(game.boss);
 		}
 	}
 	public void addEntityPlayer(EntityPlayer entplayer){
@@ -77,6 +79,9 @@ public class ObjectController {
 		while (!epl.isEmpty()) {
 	        epl.removeFirst();
 	    }
+	}
+	public void setWave(Wave w) {
+		this.wave = w;
 	}
 	
 }

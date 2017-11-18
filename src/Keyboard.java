@@ -6,7 +6,7 @@ public class Keyboard implements KeyListener {
 	private boolean[] keys = new boolean[120];
 	
 	@SuppressWarnings("unused")
-	public boolean up, down, left, right, shoot, esc, enter, numOne;
+	public boolean up, down, left, right, shoot, esc, enter, numOne, g;
 	
 	public void tick() {
 		up = keys[KeyEvent.VK_UP];
@@ -17,6 +17,7 @@ public class Keyboard implements KeyListener {
 		esc = keys[KeyEvent.VK_ESCAPE];
 		enter = keys[KeyEvent.VK_ENTER];
 		numOne = keys[KeyEvent.VK_1];
+		g = keys[KeyEvent.VK_G];
 	}
 	
 	@Override

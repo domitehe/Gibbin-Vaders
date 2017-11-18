@@ -4,13 +4,14 @@ import java.awt.Rectangle;
 
 public class Player extends Object implements EntityPlayer{
 
-	    private int fireRate = 600;
+	    private int fireRate = 400;
 	    private Game game;
 	    private ObjectController c;
 	    private Keyboard input;
 	    private int i = 0;
-	    private double playerspeed = 0.3;
+	    private double playerspeed = 0.2;
 	    private int playersize = 20;
+	    protected boolean god = false; //godmode
 	
 	public Player(double x, double y, ObjectController c, Keyboard input, Game game) {
 		super(x, y);
@@ -29,7 +30,9 @@ public class Player extends Object implements EntityPlayer{
 			EntityEnemy tempee = game.eel.get(i);
 			if(Physics.Collision(this, tempee)){
 				c.removeEntityEnemy(tempee);
-				Game.State = Game.STATE.FAIL;
+				if(!god) {
+					Game.State = Game.STATE.FAIL;
+				}
 			}
 		}
 		

@@ -4,17 +4,16 @@ import java.util.TimerTask;
 public class Wave {
 	private ObjectController c;
 	private Game game;
-	private Boss boss;
 	private int i;
+	protected boolean finished = false;
 	
 	private Timer t = new Timer();
 	
 	private int[] spawnamount = {0, 2, 4, 6, 8, 10};
 	
-	public Wave(ObjectController c, Game g, Boss b){
+	public Wave(ObjectController c, Game g){
 		this.c = c;
 		this.game = g;
-		this.boss = b;
 		spawn();
 	}
 	
@@ -25,6 +24,7 @@ public class Wave {
 		    @Override
 		    public void run() {
 		    	if(i == spawnamount.length-1) {
+		    		finished = true;
 		    		t.cancel(); //stop timer
 		    		t.purge(); // remove schedule
 		    	}

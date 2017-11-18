@@ -4,12 +4,12 @@ import java.awt.Rectangle;
 
 public class Player extends Object implements EntityPlayer{
 
-	    private int fireRate = 800;
+	    private int fireRate = 600;
 	    private Game game;
 	    private ObjectController c;
 	    private Keyboard input;
 	    private int i = 0;
-	    private double playerspeed = 0.15;
+	    private double playerspeed = 0.3;
 	    private int playersize = 20;
 	
 	public Player(double x, double y, ObjectController c, Keyboard input, Game game) {
@@ -47,7 +47,7 @@ public class Player extends Object implements EntityPlayer{
 		}
 		if(input.shoot){
 			if(i >= fireRate){
-				this.c.addEntityPlayer(new PlayerBullet(this.x+playersize/2, this.y, this.c, this.game, 0.3));
+				this.c.addEntityPlayer(new PlayerBullet(this.x+playersize/2, this.y, this.c, this.game, 0.9));
 				i = 0;
 			}
 		}

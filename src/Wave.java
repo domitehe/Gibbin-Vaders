@@ -19,21 +19,11 @@ public class Wave {
 	}
 	
 	public void spawn(){
-		/*for (int i = 0; i < spawnamount.length; i++) {
-			t.schedule(new TimerTask() {          
-		    @Override
-		    public void run() {
-		        c.createEnemy(1); 
-		    }
-		}, 5000);
-		}*/
 		i = 1;
 		t.scheduleAtFixedRate(new TimerTask() {
 
 		    @Override
 		    public void run() {
-//		    	System.out.println(i);
-//		    	System.out.println(spawnamount.length);
 		    	if(i == spawnamount.length-1) {
 		    		t.cancel(); //stop timer
 		    		t.purge(); // remove schedule

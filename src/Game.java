@@ -153,7 +153,7 @@ public class Game extends Canvas implements Runnable {
 		p = new Player(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 5, c, key, this);
 		w = new Wave(c, this, boss);
 		//Enemy e = new Enemy(WIDTH * SCALE, 50, c, this);
-		c.createEnemy(25);
+		//c.createEnemy(25);
 		
 		epl = c.getPlayerBulletList();
 		eel = c.getEnemyList();

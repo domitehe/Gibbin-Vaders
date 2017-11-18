@@ -8,7 +8,7 @@ public class Boss extends Object implements EntityEnemy{
 	private ObjectController c;
 	private int health = 15;
 	private int fireRate = 6000;
-	private int i, j;
+	private int i;
 
 	public Boss(double x, double y, ObjectController c, Game g) {
 		super(x, y);

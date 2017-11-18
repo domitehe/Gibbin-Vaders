@@ -3,7 +3,6 @@ import java.util.TimerTask;
 
 public class Wave {
 	private ObjectController c;
-	private Game game;
 	private int i;
 	protected boolean finished = false;
 	
@@ -11,9 +10,8 @@ public class Wave {
 	
 	private int[] spawnamount = {0, 2, 4, 6, 8, 10};
 	
-	public Wave(ObjectController c, Game g){
+	public Wave(ObjectController c){
 		this.c = c;
-		this.game = g;
 		spawn();
 	}
 	

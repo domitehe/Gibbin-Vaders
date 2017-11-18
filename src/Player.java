@@ -11,7 +11,7 @@ public class Player extends Object implements EntityPlayer{
 	    private int i = 0;
 	    private double playerspeed = 0.2;
 	    private int playersize = 20;
-	    protected boolean god = false; //godmode
+	    protected boolean god = false; // god mode
 	
 	public Player(double x, double y, ObjectController c, Keyboard input, Game game) {
 		super(x, y);
@@ -39,10 +39,10 @@ public class Player extends Object implements EntityPlayer{
 		if(input.left&&this.x>0){
 			this.x-=playerspeed;
 		}
-		if(input.right&&this.x+playersize/2<game.WIDTH*game.SCALE){
+		if(input.right&&this.x+playersize/2<Game.WIDTH*Game.SCALE){
 			this.x+=playerspeed;
 		}
-		if(input.down&&this.y+playersize/2<game.HEIGHT*game.SCALE){
+		if(input.down&&this.y+playersize/2<Game.HEIGHT*Game.SCALE){
 			this.y+=playerspeed;
 		}
 		if(input.up&&this.y>0){

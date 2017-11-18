@@ -1,18 +1,12 @@
 import java.awt.Canvas;
-import java.awt.Color;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.LinkedList;
 
 @SuppressWarnings("serial")
@@ -35,7 +29,6 @@ public class Game extends Canvas implements Runnable {
 	private Keyboard key;
 	private ObjectController c;
 	Player p;
-	private Enemy e;
 	private Wave w;
 	
 	private Thread thread;
@@ -150,7 +143,7 @@ public class Game extends Canvas implements Runnable {
 	private void gameinit(){
 		c = new ObjectController(this);
 		p = new Player(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 5, c, key, this);
-		w = new Wave(c, this);
+		w = new Wave(c);
 		boss = new Boss(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 2, c, this);
 		//Enemy e = new Enemy(WIDTH * SCALE, 50, c, this);
 		//c.createEnemy(25);

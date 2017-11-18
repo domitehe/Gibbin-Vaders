@@ -52,6 +52,9 @@ public class ObjectController {
 	}
 	public void removeEntityEnemy(EntityEnemy entenemy){
 		this.eel.remove(entenemy);
+		if(eel.size() == 0) {
+			Game.State = Game.STATE.BOSS;
+		}
 	}
 	public void addEntityPlayer(EntityPlayer entplayer){
 		this.epl.add(entplayer);

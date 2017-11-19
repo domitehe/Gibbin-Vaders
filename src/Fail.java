@@ -9,7 +9,7 @@ public class Fail {
 	public void render(Graphics g) {
         Font fnt0 = new Font("arial", 1, 50);
         g.setFont(fnt0);
-        g.setColor(Color.white);
+        g.setColor(Color.black);
         g.drawString("Gibbin' Vaders", 100, 100);
         Font fnt1 = new Font("Arial Bold", 2, 25);
         g.setFont(fnt1);

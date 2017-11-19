@@ -77,9 +77,9 @@ public class Game extends Canvas implements Runnable {
 	public  void run() {
 		init();
 		long lastTime = System.nanoTime();
-		final double amountOfTicks = 60.0;  //set FPS
-		double ns = 1000000000 / amountOfTicks; //in nanoseconds per tick
-		double delta = 0; //calculate the time pass
+		final double amountOfTicks = 60.0D;  //set FPS
+		double ns = 1.6666666666666666E7D;//in nanoseconds per tick
+		double delta = 0.0D; //calculate the time pass
 		int updates = 0;
 		int frames = 0;
 		long timer = System.currentTimeMillis(); //in milliseconds
@@ -87,7 +87,7 @@ public class Game extends Canvas implements Runnable {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns; //in ticks
 			lastTime = now;
-			if (delta >= 1){
+			if (delta >= 1.0D){
 				tick(); //update the frame
 				updates++; //calculate the updates
 				delta--;
@@ -95,8 +95,8 @@ public class Game extends Canvas implements Runnable {
 			render();
 			frames++; //calculate how many times it goes through this code
 			
-			if (System.currentTimeMillis() - timer > 1000){
-				timer += 1000;
+			if (System.currentTimeMillis() - timer > 1000L){
+				timer += 1000L;
 				frame.setTitle(TITLE + "  |  " + updates + "ticks, " + frames + " fps");
 				updates = 0; //reset it to 0
 				frames = 0; //reset it to 0

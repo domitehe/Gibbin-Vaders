@@ -9,7 +9,7 @@ public class Boss extends Object implements EntityEnemy{
 	private Game game;
 	private ObjectController c;
 	private int health = 15;
-	private int fireRate = 200;
+	private int fireRate = 300;
 	private int i;
 	BufferedImage image;
 	BufferedImage bullet;
@@ -22,8 +22,8 @@ public class Boss extends Object implements EntityEnemy{
 		this.c = c;
 		this.image = image;
 		this.bullet = bullet;
-		movementspeedx = 0.3;
-		movementspeedy = 0.3 ;
+		movementspeedx = 0.2;
+		movementspeedy = 0.2 ;
 	}
 	
 	public void render(Graphics g){

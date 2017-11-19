@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -5,13 +6,17 @@ public class Wave {
 	private ObjectController c;
 	private int i;
 	protected boolean finished = false;
+	BufferedImage image;
+	BufferedImage bullet;
 	
 	private Timer t = new Timer();
 	
-	private int[] spawnamount = {0, 2, 4, 6, 8, 10};
-	
-	public Wave(ObjectController c){
+	private int[] spawnamount = {2, 2, 4, 6, 6, 8};
+
+	public Wave(ObjectController c, BufferedImage image, BufferedImage bullet){
 		this.c = c;
+		this.image = image;
+		this.bullet = bullet;
 		spawn();
 	}
 	
@@ -26,7 +31,7 @@ public class Wave {
 		    		t.cancel(); //stop timer
 		    		t.purge(); // remove schedule
 		    	}
-		    	c.createEnemy(spawnamount[i]);
+		    	c.createEnemy(spawnamount[i], image, bullet);
 		    	i++;
 		        //Called each time when 1000 milliseconds (1 second) (the period parameter)
 		    }

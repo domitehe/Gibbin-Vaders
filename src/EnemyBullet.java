@@ -1,14 +1,17 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public class EnemyBullet extends Bullet implements EntityEnemy{
 	private int bulletsize =4;
     private double nx;
     private double ny;
-
-	public EnemyBullet(double x, double y, ObjectController c, Game game,double speed, double dir) {
+    BufferedImage image;
+    
+	public EnemyBullet(double x, double y, ObjectController c, Game game,double speed, double dir, BufferedImage image) {
 		super(x, y, c, game, speed);
+		this.image = image;
         this.nx = (double)this.speed * Math.cos(dir);
         this.ny = (double)this.speed * Math.sin(dir);
 	}
@@ -23,9 +26,9 @@ public class EnemyBullet extends Bullet implements EntityEnemy{
 
     public void render(Graphics g) {
     	tick();
-        g.drawRect((int)this.x-bulletsize/2, (int)this.y-bulletsize/2,bulletsize, bulletsize);
+    	g.drawImage(image, (int)this.x, (int)this.y, null);
         g.setColor(Color.RED);
-        if(this.y > Game.HEIGHT*Game.SCALE){
+        if(this.y > Game.HEIGHT*Game.SCALE||this.y < 0.0D || this.x > Game.WIDTH*Game.SCALE|| this.x< 0.0D ){
         	c.removeEntityEnemy(this);
         }
     }

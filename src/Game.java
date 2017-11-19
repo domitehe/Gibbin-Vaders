@@ -48,7 +48,12 @@ public class Game extends Canvas implements Runnable {
 	protected Boss boss;
 	private BufferedImage menuImage;
 	private BufferedImage stageImage;
-
+	private BufferedImage bossImage;
+	private BufferedImage enemyImage;
+	private BufferedImage Enemys;
+	private BufferedImage players;
+	private BufferedImage playerimage;
+	private BufferedImage bossboss;
 	
 	public static void main(String[] args) {
 		Game game = new Game();
@@ -127,12 +132,17 @@ public class Game extends Canvas implements Runnable {
 	        try {
 	            this.stageImage= loader.loadImage("/images/stage.png");
 	            this.menuImage= loader.loadImage("/images/menu.png");
+	            this.bossImage=loader.loadImage("/images/boss.png");
+	            this.enemyImage= loader.loadImage("/images/enemy.png");
+	            this.Enemys = loader.loadImage("/images/Enemys.png");
+	            this.players = loader.loadImage("/images/playerS.PNG");
+	            this.playerimage = loader.loadImage("/images/player.png");
+	            this.bossboss = loader.loadImage("/images/bossboss.png");
 	        } catch (IOException var3) {
 	            var3.printStackTrace();
 	        }
 		key = new Keyboard();
 		this.addKeyListener(key); //call the KeyInput class
-		//this.addMouseListener(new MouseInput()); //call the MouseInput class
 		menu = new Menu();
 		fail = new Fail();
 		pause = new Pause();
@@ -142,11 +152,9 @@ public class Game extends Canvas implements Runnable {
 	
 	private void gameinit(){
 		c = new ObjectController(this);
-		p = new Player(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 5, c, key, this);
-		w = new Wave(c);
-		boss = new Boss(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 2, c, this);
-		//Enemy e = new Enemy(WIDTH * SCALE, 50, c, this);
-		//c.createEnemy(25);
+		p = new Player(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 5, c, key, this, playerimage, players);
+		w = new Wave(c, enemyImage,Enemys );
+		boss = new Boss(WIDTH * SCALE / 2, HEIGHT * SCALE / 6 * 2, c, this, Enemys, bossboss);
 		c.setWave(w);
 		epl = c.getPlayerBulletList();
 		eel = c.getEnemyList();
@@ -155,13 +163,13 @@ public class Game extends Canvas implements Runnable {
 	private void tick(){
 		key.tick();
 		if(State== STATE.GAME){
-//			c.tick();
-//			p.tick();
+			c.tick();
+			p.tick();
 		}
 		if(State == STATE.BOSS) {
-//			c.tick();
-//			p.tick();
-//			boss.tick();
+			c.tick();
+			p.tick();
+			boss.tick();
 		}
 		if(key.enter && State== STATE.MENU){
 			State = STATE.GAME;
@@ -180,7 +188,7 @@ public class Game extends Canvas implements Runnable {
 			State = STATE.MENU;
 		}
 		if(key.g && State == STATE.GAME) {
-			p.god = true; // set godmode
+			p.god = true; 
 		}
 	}
 	private void render(){
@@ -192,7 +200,7 @@ public class Game extends Canvas implements Runnable {
 		
 		Graphics g = bs.getDrawGraphics(); //apply buffer strategy to graphics
 		g.drawImage(this.menuImage, 0, 0, this.getWidth(), this.getHeight(), this);
-
+		
 			
 		if (State == STATE.MENU) {
 				
@@ -211,6 +219,7 @@ public class Game extends Canvas implements Runnable {
 			pause.render(g);
 		}
 		if(State == STATE.BOSS) {
+			g.drawImage(this.bossImage, 0, 0, this.getWidth(), this.getHeight(), null);
 			boss.render(g);
 			p.render(g);
 			c.render(g);

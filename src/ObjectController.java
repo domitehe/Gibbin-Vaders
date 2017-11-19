@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -42,9 +43,9 @@ public class ObjectController {
 		}
 	}
 	
-	public void createEnemy(int enemy_count){
+	public void createEnemy(int enemy_count, BufferedImage enemyimage, BufferedImage bulletimage){
 		for (int i = 0; i < enemy_count; i++) {
-			Enemy e = new Enemy(Game.WIDTH * Game.SCALE * r.nextDouble(), 50, this, game);
+			Enemy e = new Enemy(Game.WIDTH * Game.SCALE * r.nextDouble(), -20, this, game, enemyimage, bulletimage);
 			addEntityEnemy(e);
 		}
 	}
@@ -56,6 +57,8 @@ public class ObjectController {
 		if((eel.size() == 0) & wave.finished) {
 			Game.State = Game.STATE.BOSS;
 			this.addEntityEnemy(game.boss);
+			this.game.p.x =Game.WIDTH * Game.SCALE / 2;
+			this.game.p.y =  Game.HEIGHT * Game.SCALE / 6 * 5;
 		}
 	}
 	public void addEntityPlayer(EntityPlayer entplayer){
